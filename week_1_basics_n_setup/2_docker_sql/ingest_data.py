@@ -25,7 +25,7 @@ def main(params):
         csv_name = 'output.csv.gz'
     else:
         csv_name = 'output.csv'
-
+    # download file from url
     os.system(f"wget {url} -O {csv_name}")
 
     engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
@@ -36,9 +36,9 @@ def main(params):
 
     df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
     df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
-
+    # create table from pandas
     df.head(n=0).to_sql(name=table_name, con=engine, if_exists='replace')
-
+    # write data to table 
     df.to_sql(name=table_name, con=engine, if_exists='append')
 
 

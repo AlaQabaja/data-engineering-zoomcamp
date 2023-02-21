@@ -236,6 +236,19 @@ Shutting it down:
 docker-compose down
 ```
 
+Note: So far, this has been to create the required services. To actually run the ETL code, we need to run this command after building the image with: docker build -t taxi_ingest:v001 .
+
+docker run -it \
+  --network=2_docker_sql_default \
+  taxi_ingest:v001 \
+    --user=root \
+    --password=root \
+    --host=pgdatabase \
+    --port=5432 \
+    --db=ny_taxi \
+    --table_name=yellow_taxi_trips \
+    --url="https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz"
+
 Note: to make pgAdmin configuration persistent, create a folder `data_pgadmin`. Change its permission via
 
 ```bash
